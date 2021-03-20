@@ -1,0 +1,20 @@
+---
+porsche:
+  :type: :brand
+  :checks:
+    :checks:
+      :within_size_range: !ruby/range
+        begin: 1
+        end: 10
+        excl: false
+      :without_forbidden_characters:
+      - o
+      - l
+      - q
+  '356':
+    :type: :model
+    :checks:
+      :within_size_range: !ruby/range
+        begin: 5
+        end: 5
+        excl: false
