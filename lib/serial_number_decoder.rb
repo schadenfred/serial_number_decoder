@@ -38,8 +38,16 @@ class SerialNumberDecoder
     end
   end 
   
-  def within_size_range(arg) 
-    if arg.include?(@serial.size) 
+  def character_at_index(character, index) 
+     serial_to_array = @serial.scan /\w/
+     
+     if character = serial_to_array[index]
+        "might be a ford"
+     end
+  end
+  
+  def within_size_range(argument) 
+    if argument.include?(@serial.size) 
       @checks[:pass] << 'character count matches' 
     else 
       @checks[:fail] << 'character count does not match' 

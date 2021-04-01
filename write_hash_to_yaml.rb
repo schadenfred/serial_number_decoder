@@ -32,7 +32,7 @@ RULES = {
     '356' => {
       type: :model, 
       checks: { 
-        within_size_range: 5..5
+        # within_size_range: 5..5
       }
     } 
   }

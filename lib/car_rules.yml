@@ -13,8 +13,4 @@ porsche:
       - q
   '356':
     :type: :model
-    :checks:
-      :within_size_range: !ruby/range
-        begin: 5
-        end: 5
-        excl: false
+    :checks: {}

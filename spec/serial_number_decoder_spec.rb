@@ -7,25 +7,52 @@ describe SerialNumberDecoder do
   Given(:serial)     { '' }  
   Given(:decoder)    { SerialNumberDecoder.new(rules, serial) }
 
-  Given(:brand_rule) { { brand: { 
-    name: 'porsche',
-    checks: { } } } }
+  Given(:brand_rule) { 
+    { brand: 
+      { 
+        name: 'porsche',
+        checks: { } 
+      } 
+    } 
+  }
+  
+  Then { assert_equal decoder.class, SerialNumberDecoder }
 
+  describe 'character_at_index' do
+    
+    Given(:ford_serial)     { '1f3456' }
+    Given(:not_ford_serial) { '1z3456' }
+    
+    describe 'when serial number may be for a ford' do 
+      
+      Given(:serial) { ford_serial }
+      Given(:actual) { decoder.character_at_index( 'f', 1 )}
+      
+      Given(:expected) { 'might be a ford' }
+      Then { assert_equal expected, actual }
+    end
+    # describe 'when serial number cannot be for a ford' do 
+    #   Given(:serial) { ford_serial }
+    
+    #   Then { assert_equal decoder.character_at_index( 'f', 1 ), 'might be a ford' 
+    # end 
+  end 
+  
   describe '#build_graph' do         
     
     Given { brand_rule[:brand][:checks].merge!( within_size_range: 1..10 ) }
     Given { rules.merge! brand_rule }
     
-    Given(:deductions)             { decoder.deductions[:brand]['porsche'] }
+    Given(:deductions)   { decoder.deductions[:brand]['porsche'] }
     Given(:valid_serial) { '123456' }
     
     describe 'character count check' do      
       describe 'inclusion' do
 
         Given(:serial)   { valid_serial }
-        Given(:expected) { "character count matches"}
+        Given(:expected) { ["character count matches"]}
       
-        Then { assert_equal deductions[:pass], [expected] }
+        Then { assert_equal deductions[:pass], expected }
       end 
       
       describe 'exclusion' do 
